@@ -5,6 +5,11 @@
   align-items: baseline;
   row-gap: 2em;
   column-gap: 2em;
+  margin: 2em 0;
+  padding: 1em;
+  background-color: #3f6895;
+  border-radius: 10px;
+  box-shadow: 0 3px 3px 3px black;
 }
 
 #dashboard-posts .dashboard-tip {
@@ -13,6 +18,7 @@
   flex-direction: column;
   border-radius: 5px;
   overflow: hidden;
+  background-color: white;
   row-gap: 0;
   box-shadow: 0 3px 3px 0 var(--bg-primary);
 }
@@ -38,4 +44,10 @@
 }
 .dashboard-tip .tip-quote {
   background-color: #c3c9e9;
+}
+
+@media screen and (max-width: 650px) {
+  #dashboard-posts {
+    width: 100%;
+  }
 }

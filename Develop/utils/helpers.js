@@ -4,6 +4,16 @@ const getAllTips = async () => {
   let allPosts = await Tip.findAll({});
   return allPosts;
 };
+
+const getTipById = async (tipId) => {
+  let singleTip = await Tip.findOne({
+    where: {
+      id: tipId,
+    },
+  });
+
+  return singleTip;
+};
 const createNewTip = async (email, tipContent) => {
   let user = await findUserByEmail(email);
   console.log("my user: ", user);
@@ -32,6 +42,21 @@ const getAllUsers = async () => {
   });
   return allUsers;
 };
+
+const incrementUpVotes = async (tipId, voteDirection) => {
+  let tipVotes = await getTipById(tipId);
+  let updatedVotes = await Tip.update(
+    {
+      votes: tipVotes.votes + 1,
+    },
+    {
+      where: {
+        id: parseInt(tipId),
+      },
+    }
+  ).catch((err) => console.log(err));
+  return updatedVotes;
+};
 const findUserByEmail = async (email) => {
   let specificUser = await User.findOne({
     attributes: ["id", "name", "email"],
@@ -55,14 +80,22 @@ const mostPopularFilter = async () => {
   let formattedTips = orderedTips.map((tip) => tip.get({ plain: true }));
   return formattedTips;
 };
-
+const formatDate = (exhib_date) => {
+  let newYear = parseInt(exhib_date.getFullYear());
+  let month = exhib_date.getMonth();
+  let day = exhib_date.getDate();
+  let output = `${day}/${month + 1}/${newYear}`;
+  return `${output}`;
+};
 module.exports = {
   getAllTips,
   createNewTip,
+  incrementUpVotes,
   deleteTip,
   getAllUsers,
   findUserByEmail,
   mostPopularFilter,
+  formatDate,
 };
 
 // module.exports = () =>
